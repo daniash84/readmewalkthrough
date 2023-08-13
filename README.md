@@ -40,7 +40,6 @@ THEN I am taken to the corresponding section of the README
 
 #### Resources:
 youtube.com
-mdn
-w3schools
 google
 asu classwork
+npm
