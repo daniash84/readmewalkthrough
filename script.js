@@ -7,26 +7,14 @@ const api = require('./utils/api.js');
 const questions = [
    
     {
-    type: 'input'
+    type: 'input',
     message: 'What is your GitHub username?',
     name: 'github',
-    validate: function (answer) {
-        if (answer.length < 1) {
-            return console.log("A valid GitHub username is required");
-        }
-        return true;
-    }
 }
 {
     type: 'input',
     message: 'What is the name of your GitHub Repo?',
     name: 'repo',
-    validate: function (answer) {
-        if (answer.length < 1) {
-            return console.log("A valid GitHub repo is required for a badge.");
-        }
-        return true;
-    }
   },
   {
     type: 'input',
@@ -37,37 +25,71 @@ const questions = [
     type: 'input',
     message: 'What is your project name?',
     name: 'project',
-    validate: function (answer) {
-      if (answer.length < 1) {
-          return console.log("A valid project title is required.");
-      }
-      return true;
-  }
   },
-    {
-    type: 'list-input'
-    message: 'What kind of license should your project have?',
-     choices: ['MIT', 'LGPL-2.1', 'BSD-3' , 'Apache 2.0'],
-     name: 'license',
-    }
-    {
-        type: 'input',
-        message: 'What command is needed to install your dependancies?',
-        name: 'dependancies',
-      },
-      {
-        type: 'input',
-        message: 'What command is needed to run your project?',
-        name: 'command',
-      },
       {
         type: 'input',
         message: 'Describe your project:',
         name: 'describe',
       },
+      {
+        type: 'input',
+        message: "Describe the steps required to install your project for the Installation section.",
+        name: 'installation'
+    },
+    {
+        type: 'input',
+        message: "Provide instructions and examples of your project in use for the Usage section.",
+        name: 'usage'
+    },
+    {
+        type: 'input',
+        message: "Provide guidelines on how other developers can contribute to your project.",
+        name: 'contributing'
+    },
+    {
+        type: 'input',
+        message: "Provide any tests written for your application and provide examples on how to run them.",
+        name: 'tests'
+    },
+    {
+        type: 'list',
+        message: "Choose a license for your project.",
+        choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
+        name: 'license'
+    }
+    ];
+    function writeToFile(fileName, data) {
+        fs.writeFile(fileName, data, err => {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("Success!")
+        });
+    }
+    const writeFileAsync = util.promisify(writeToFile);
+    async function init() {
+        try{
+            
+            const userResponse = await inquirer.prompt(questions);
+            console.log('Your Response: ', userResponse);
+            console.log("Retrieving your GitHub data next");
     
-  .then((response) =>
-    response.confirm === response.password
-      ? console.log('Success!')
-      : console.log('You forgot your password already?!')
-  );
+            const userInfo = await api.getUser(userResponse);
+            console.log("GitHub user info: ", userInfo);
+            console.log("Building your beautiful README");
+    
+            const markdown = generateMarkdown(userResponse, userInfo);
+            console.log(markdown);
+    
+            await writeFileAsync('ExampleREADME.md', markdown);
+            console.log("README is Completed....Now you can relax");
+    
+        
+        } catch  (error) {
+            console.error();
+        }
+    
+    }
+    
+    
+    init();
