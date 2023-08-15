@@ -1,8 +1,7 @@
 const fs = require('fs')
 const inquirer = require('inquirer');
 
-inquirer
-  .prompt([ 
+const questions = [
    
     {
     type: 'input',
@@ -55,7 +54,7 @@ inquirer
         choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
         name: 'license'
     },
-    ]);
+    ];
     function writeToFile(fileName, data) {
         fs.writeFile(fileName, data, err => {
             if (err) {
@@ -63,14 +62,32 @@ inquirer
             }
             console.log("Success!")
         });
-    };
+    }
     function init() {
         inquirer
             .prompt(questions)
-            .then (answers) => {
-
-            }
     }
+        try{
+            
+            const userResponse = inquirer.prompt(questions);
+            console.log('Your Response: ', userResponse);
+            console.log("Retrieving your GitHub data next");
+    
+            const userInfo = api.getUser(userResponse);
+            console.log("GitHub user info: ", userInfo);
+            console.log("Building your beautiful README");
+    
+            const markdown = generateMarkdown(userResponse, userInfo);
+            console.log(markdown);
+    
+            await writeFileAsync('ExampleREADME.md', markdown);
+            console.log("README is Completed....Now you can relax");
+    
+        
+        } catch  (error) {
+            console.error();
+        }
+    
     
     
     init();
