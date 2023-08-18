@@ -1,5 +1,6 @@
 const fs = require('fs')
 const inquirer = require('inquirer');
+const generateREADME = require ("./generatereadme")
 
 const questions = [
    
@@ -66,28 +67,14 @@ const questions = [
     function init() {
         inquirer
             .prompt(questions)
-    }
-        try{
-            
-            const userResponse = inquirer.prompt(questions);
-            console.log('Your Response: ', userResponse);
-            console.log("Retrieving your GitHub data next");
-    
-            const userInfo = api.getUser(userResponse);
-            console.log("GitHub user info: ", userInfo);
-            console.log("Building your beautiful README");
-    
-            const markdown = generateMarkdown(userResponse, userInfo);
-            console.log(markdown);
-    
-            await writeFileAsync('ExampleREADME.md', markdown);
-            console.log("README is Completed....Now you can relax");
-    
-        
-        } catch  (error) {
-            console.error();
-        }
-    
+            .then(answers => writeToFile("README.md", generateREADME(answers))) 
+            // .then((answers) => {
+        // const readMePageContent = generateREADME ({...answers});
+                 
+                // fs.writeFile('index.html', readMePageContent, (err) =>
+                //   err ? console.log(err) : console.log('Successfully created README!')
+                // );
+              }; 
     
     
     init();
