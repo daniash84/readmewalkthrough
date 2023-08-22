@@ -68,12 +68,7 @@ const questions = [
         inquirer
             .prompt(questions)
             .then(answers => writeToFile("README.md", generateREADME(answers))) 
-            // .then((answers) => {
-        // const readMePageContent = generateREADME ({...answers});
-                 
-                // fs.writeFile('index.html', readMePageContent, (err) =>
-                //   err ? console.log(err) : console.log('Successfully created README!')
-                // );
+    
               }; 
     
     

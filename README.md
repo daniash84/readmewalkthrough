@@ -1,25 +1,25 @@
-# **sdfds**
+# **ReadMe Generator**
 
-## Author:**sdfsd** 
+## Author:**Danielle** 
 
-## Github Name: sfd
+## Github Name: daniashlee
 
-## Github Repo: sdfsd
+## Github Repo: insert repo here
 
 ## Project Description:
-sfdsd
+Helps build a readme.md
 
 ### Installation
-sfsd
+you npm inquirer
 
 ### Usage
-sfds
+insert here
 
 ### Contributing 
-sdfsd
+insert here
 
 ### Tests
-sdfsd
+n/a
 
 ### Licenses
-GNU AGPLv3
+MIT License
